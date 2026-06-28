@@ -1,0 +1,9 @@
+-e .
+
+black
+
+ruff
+
+pytest
+
+mypy
