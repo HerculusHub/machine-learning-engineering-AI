@@ -5,45 +5,75 @@ Central logging configuration.
 from __future__ import annotations
 
 import logging
-from logging.handlers import RotatingFileHandler
 from pathlib import Path
 
-from mobile_ai_system.core.config import settings
-from mobile_ai_system.core.constants import LOG_FORMAT
+from mobile_ai_system.core.config import get_settings
 
 
-LOG_DIRECTORY = Path("logs")
-LOG_DIRECTORY.mkdir(exist_ok=True)
+_LOGGER_INITIALIZED = False
 
 
-LOG_FILE = LOG_DIRECTORY / "application.log"
+def configure_logging() -> None:
+    """
+    Configure application logging.
+
+    Safe to call multiple times.
+    """
+
+    global _LOGGER_INITIALIZED
+
+    if _LOGGER_INITIALIZED:
+        return
+
+    settings = get_settings()
+
+    # Create log directory if it does not exist
+    log_dir = Path(
+        getattr(settings, "log_directory", "logs")
+    )
+
+    log_dir.mkdir(
+        parents=True,
+        exist_ok=True,
+    )
+
+    log_file = getattr(
+        settings,
+        "log_file",
+        "application.log",
+    )
+
+    logging.basicConfig(
+        level=getattr(
+            logging,
+            settings.log_level.upper(),
+            logging.INFO,
+        ),
+        format=(
+            "%(asctime)s | "
+            "%(levelname)s | "
+            "%(name)s | "
+            "%(message)s"
+        ),
+        handlers=[
+            logging.FileHandler(
+                log_dir / log_file,
+                encoding="utf-8",
+            ),
+            logging.StreamHandler(),
+        ],
+    )
+
+    _LOGGER_INITIALIZED = True
 
 
-logging.basicConfig(
-    level=getattr(logging, settings.log_level.upper()),
-    format=LOG_FORMAT,
-)
-
-
-file_handler = RotatingFileHandler(
-    LOG_FILE,
-    maxBytes=5 * 1024 * 1024,
-    backupCount=5,
-)
-
-file_handler.setFormatter(
-    logging.Formatter(LOG_FORMAT)
-)
-
-
-root_logger = logging.getLogger()
-
-root_logger.addHandler(file_handler)
-
-
-def get_logger(name: str) -> logging.Logger:
+def get_logger(
+    name: str,
+) -> logging.Logger:
     """
     Return a configured logger.
     """
+
+    configure_logging()
 
     return logging.getLogger(name)

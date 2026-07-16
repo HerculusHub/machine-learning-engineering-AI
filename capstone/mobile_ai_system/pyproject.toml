@@ -133,6 +133,7 @@ target-version = "py311"
 pythonpath = [
     "src"
 ]
+addopts = "--import-mode=importlib"
 
 testpaths = [
     "tests"

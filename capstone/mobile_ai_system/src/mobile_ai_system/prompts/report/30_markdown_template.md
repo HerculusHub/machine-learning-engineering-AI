@@ -6,11 +6,11 @@ Use the following report structure.
 
 # Mobile Network Operator Strategic Intelligence Report
 
-**Generated:** {timestamp}
+**Generated:** {{timestamp}}
 
-**Target Company:** {company}
+**Target Company:** {{company}}
 
-**Competitor:** {competitor}
+**Competitor:** {{competitor}}
 
 **Analyst:** AI Strategic Intelligence Platform
 
@@ -18,7 +18,7 @@ Use the following report structure.
 
 # Executive Summary
 
-{executive_summary}
+{{executive_summary}}
 
 ---
 

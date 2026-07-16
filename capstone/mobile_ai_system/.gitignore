@@ -21,9 +21,12 @@ venv/
 # Logs
 logs/
 *.log
+logs/application.log
 
 # Jupyter
 .ipynb_checkpoints/
+notebooks/
+
 
 # Build
 dist/
@@ -34,6 +37,7 @@ vector_db/
 
 # Data Cache
 data/cache/
+data/
 
 # macOS
 .DS_Store
