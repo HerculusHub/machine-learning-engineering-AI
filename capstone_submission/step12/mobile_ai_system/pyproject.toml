@@ -1,0 +1,149 @@
+[build-system]
+requires = [
+    "setuptools>=69.0",
+    "wheel"
+]
+build-backend = "setuptools.build_meta"
+
+
+[project]
+
+name = "mobile-ai-system"
+
+version = "0.1.0"
+
+description = "Multi-Agent Strategic Intelligence Platform for Mobile Network Operators"
+
+readme = "README.md"
+
+requires-python = ">=3.11"
+
+license = { text = "MIT" }
+
+authors = [
+    { name = "Lu L" }
+]
+
+
+dependencies = [
+
+    # ----------------------------
+    # AI Framework
+    # ----------------------------
+
+    "langchain>=0.3",
+
+    "langgraph>=0.5",
+
+    "langchain-google-genai>=2.0",
+
+    "deepagents",
+
+    # ----------------------------
+    # Configuration
+    # ----------------------------
+
+    "python-dotenv",
+
+    "pydantic>=2.8",
+
+    "pydantic-settings>=2.4",
+
+    # ----------------------------
+    # Database
+    # ----------------------------
+
+    "pymongo",
+
+    "sqlalchemy>=2",
+
+    "psycopg2-binary",
+
+    # ----------------------------
+    # Vector DB
+    # ----------------------------
+
+    "chromadb",
+
+    "faiss-cpu",
+
+    # ----------------------------
+    # Machine Learning
+    # ----------------------------
+
+    "numpy",
+
+    "pandas",
+
+    "scikit-learn",
+
+    "joblib",
+
+    # ----------------------------
+    # Utilities
+    # ----------------------------
+
+    "rich",
+
+    "tqdm"
+]
+
+
+[project.optional-dependencies]
+
+dev = [
+
+    "pytest",
+
+    "black",
+
+    "ruff",
+
+    "mypy"
+
+]
+
+
+[tool.setuptools]
+
+package-dir = { "" = "src" }
+
+
+[tool.setuptools.packages.find]
+
+where = ["src"]
+
+
+[tool.black]
+
+line-length = 88
+
+target-version = ["py311"]
+
+
+[tool.ruff]
+
+line-length = 88
+
+target-version = "py311"
+
+
+[tool.pytest.ini_options]
+
+pythonpath = [
+    "src"
+]
+addopts = "--import-mode=importlib"
+
+testpaths = [
+    "tests"
+]
+
+
+[tool.mypy]
+
+python_version = "3.11"
+
+warn_return_any = true
+
+warn_unused_configs = true
