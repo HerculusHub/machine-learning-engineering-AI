@@ -1,37 +1,37 @@
-from mobile_ai_system.core.container import ServiceContainer
+"""
+Tests for Container.
+"""
+
+from mobile_ai_system.core.container import Container
 
 
-def test_register_instance():
+def test_register_factory():
 
-    c = ServiceContainer()
+    container = Container()
 
-    c.register_instance(
+    container.register_factory(
         "number",
-        10
+        lambda: 123,
     )
 
-    assert c.resolve("number") == 10
+    assert container.resolve("number") == 123
 
 
-def test_factory():
+def test_registered_services():
 
-    c = ServiceContainer()
+    container = Container()
 
-    c.register_factory(
-        "value",
-        lambda: 100
+    container.register_instance(
+        "A",
+        object(),
     )
 
-    assert c.resolve("value") == 100
-
-
-def test_contains():
-
-    c = ServiceContainer()
-
-    c.register_instance(
-        "x",
-        1
+    container.register_instance(
+        "B",
+        object(),
     )
 
-    assert c.contains("x")
+    services = container.registered_services()
+
+    assert "A" in services
+    assert "B" in services

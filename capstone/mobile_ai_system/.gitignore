@@ -38,6 +38,7 @@ vector_db/
 # Data Cache
 data/cache/
 data/
+scripts/
 
 # macOS
 .DS_Store

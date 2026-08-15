@@ -1,228 +1,208 @@
+# Report Quality Scoring
 
+## Runtime Inputs
 
-# Inputs
+Evaluate only the information supplied in the current runtime prompt.
 
-Executive Report
+Relevant inputs may include:
 
-Business Impact Analysis
+1. User Request
+2. Retrieved Competitor Evidence
+3. Impact Analysis Result
+4. Draft Executive Report
 
-Competitor Intelligence
-
-Customer Churn Analysis
-
-Supporting Evidence
-
-Historical Reports
-
-User Request
-
----
-
-# Evaluation Objectives
-
-Determine whether the report:
-
-Answers the user's request.
-
-Contains sufficient evidence.
-
-Uses sound reasoning.
-
-Provides useful business insights.
-
-Supports executive decision making.
-
----
+Do not assume access to historical reports, memory, external research, or
+other evidence unless explicitly supplied.
 
 # Evaluation Dimensions
 
-## 1. Requirement Satisfaction
+Evaluate the report on six dimensions.
 
-Does the report answer the user's question?
+All scores use the range:
 
-Score:
+0.00 to 1.00
 
-0–100
+## 1. Requirement Satisfaction — 20%
 
----
+Determine whether the report:
 
-## 2. Accuracy
+- answers the user's actual request;
+- addresses the requested competitor activity;
+- addresses customer/churn impact when requested;
+- addresses financial impact when requested; and
+- provides strategic recommendations when requested.
 
-Are factual statements supported?
+Scoring guidance:
 
-No fabricated information.
+- 0.90–1.00: Fully satisfies the request.
+- 0.80–0.89: Satisfies the request with only minor omissions.
+- 0.70–0.79: Generally answers the request but has meaningful gaps.
+- 0.60–0.69: Important requirements are missing.
+- Below 0.60: Fails to answer major parts of the request.
 
-No contradictions.
+## 2. Accuracy and Evidence Grounding — 25%
 
-Score:
+Determine whether:
 
-0–100
+- factual claims are supported by supplied evidence;
+- analytical values match supplied analytical results;
+- observed facts and model estimates are distinguished;
+- unsupported facts are avoided;
+- causal claims do not exceed supplied causal evidence; and
+- financial claims are supported.
 
----
+A material fabricated competitor event, customer statistic, analytical result,
+or financial value should substantially reduce this score.
 
-## 3. Completeness
+## 3. Completeness — 15%
 
-Does the report include:
+Determine whether the report contains the material components required to
+answer the user's request.
 
-Executive Summary
+Relevant components may include:
 
-Competitor Analysis
+- Executive Summary;
+- Competitor Activity;
+- Market Intelligence Assessment;
+- Customer Churn Analysis;
+- Causal Analysis;
+- Financial Impact Assessment;
+- Strategic Countermeasures;
+- Key Risks;
+- Supporting Evidence;
+- Limitations; and
+- Confidence Assessment.
 
-Customer Analysis
+Do not penalize a report merely because unavailable information is explicitly
+identified as unavailable.
 
-Business Impact
+## 4. Logical Reasoning — 20%
 
-Supporting Evidence
+Determine whether:
 
-Limitations
+- conclusions follow from evidence;
+- analytical results are interpreted correctly;
+- assumptions are visible;
+- uncertainty is acknowledged;
+- strategic conclusions follow logically from the analysis; and
+- recommendations address identified business problems.
 
-Confidence Assessment
+Penalize unsupported leaps from evidence to conclusion.
 
-Score:
+## 5. Business Value — 15%
 
-0–100
+Determine whether the report:
 
----
+- identifies decision-relevant findings;
+- explains why findings matter;
+- prioritizes important issues;
+- provides actionable recommendations;
+- communicates material risks; and
+- supports executive decision making.
 
-## 4. Logical Reasoning
+Avoid rewarding verbosity.
 
-Does every conclusion follow from evidence?
+## 6. Report Organization — 5%
 
-Are assumptions clearly identified?
+Determine whether the report has:
 
-Is uncertainty explained?
-
-Score:
-
-0–100
-
----
-
-## 5. Business Value
-
-Would executives benefit from this report?
-
-Would it support strategic decision making?
-
-Score:
-
-0–100
-
----
-
-## 6. Report Organization
-
-Logical flow
-
-Professional language
-
-Readable structure
-
-No repetition
-
-Score:
-
-0–100
-
----
+- clear structure;
+- professional language;
+- readable formatting;
+- concise presentation;
+- logical flow; and
+- minimal unnecessary repetition.
 
 # Overall Score
 
-Weighted average:
+Calculate the weighted overall score:
 
-Requirement Satisfaction 20%
+Requirement Satisfaction × 0.20
 
-Accuracy 25%
+Accuracy and Evidence Grounding × 0.25
 
-Completeness 15%
+Completeness × 0.15
 
-Reasoning 20%
+Logical Reasoning × 0.20
 
-Business Value 15%
+Business Value × 0.15
 
-Organization 5%
+Report Organization × 0.05
 
-Generate:
+The overall score must be between:
 
-Overall Score (0–100)
+0.00 and 1.00
 
-Quality Rating
+# Quality Rating
 
-90–100 Outstanding
+Use:
 
-80–89 Good
+- 0.90–1.00: Outstanding
+- 0.80–0.89: Good
+- 0.70–0.79: Acceptable
+- 0.60–0.69: Weak
+- Below 0.60: Poor
 
-70–79 Acceptable
+# Acceptance Threshold
 
-60–69 Weak
+The MVP acceptance threshold is:
 
-Below 60 Poor
+0.80
 
----
+Normally:
 
-# Output
+- Overall Score >= 0.80 → ACCEPT
+- Overall Score < 0.80 → REFINE
 
-Return Markdown.
+However, a critical guardrail failure requires REFINE even when the numerical
+score is 0.80 or higher.
 
-# Evaluation Summary
+# Required Evaluation Content
+
+Provide:
 
 ## Overall Score
 
-92
+Return a decimal value from 0.00 to 1.00.
 
-Outstanding
+## Quality Rating
 
----
+Outstanding / Good / Acceptable / Weak / Poor
 
 ## Detailed Scores
 
-Requirement Satisfaction
+Provide scores for:
 
-Accuracy
-
-Completeness
-
-Reasoning
-
-Business Value
-
-Organization
-
----
+- Requirement Satisfaction
+- Accuracy and Evidence Grounding
+- Completeness
+- Logical Reasoning
+- Business Value
+- Report Organization
 
 ## Strengths
 
-...
-
----
+Identify the most important strengths.
 
 ## Weaknesses
 
-...
-
----
+Identify material weaknesses only.
 
 ## Missing Information
 
-...
+Identify missing information that materially affects the report.
 
----
+Do not describe information as missing when it was not required for the
+user's request.
 
 ## Suggested Improvements
 
-...
+Provide specific changes that the Report Agent can perform during one
+refinement pass.
 
----
+## Evaluation Confidence
 
-## Confidence
-
-High
-
-Medium
-
-Low
-
----
+High / Medium / Low
 
 # Constraints
 
@@ -230,4 +210,8 @@ Never rewrite the report.
 
 Never fabricate errors.
 
-Always justify deductions.
+Always justify material deductions.
+
+Do not reward unsupported detail.
+
+Do not penalize appropriate disclosure of uncertainty.

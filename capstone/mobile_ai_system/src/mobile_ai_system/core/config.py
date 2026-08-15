@@ -1,5 +1,5 @@
 """
-Global configuration.
+lobal configuration.
 
 Architecture v2.3 (Frozen)
 
@@ -75,28 +75,7 @@ class Settings(BaseSettings):
     evaluation_agent_model: str = "llama-3.1-8b-instant"
     supervisor_agent_model: str = "gemini-2.5-flash"
 
-    # ==========================================================
-    # Backward Compatibility
-    # ==========================================================
-
-    @property
-    def model_name(self) -> str:
-        """
-        Compatibility with the old architecture.
-
-        Returns the default model expected by older code/tests.
-        """
-        return self.report_agent_model
-
-    @property
-    def provider(self) -> str:
-        """
-        Compatibility with the old architecture.
-
-        Returns the default provider expected by older code/tests.
-        """
-        return self.default_llm_provider
-
+   
     # ==========================================================
     # MongoDB
     # ==========================================================
@@ -104,6 +83,8 @@ class Settings(BaseSettings):
     mongo_uri: str
 
     mongo_database: str = "industry_db"
+
+    mongo_collection: str = "operator_events"
 
     business_data_path: str = "./data/business/customer_churn.csv"
 
@@ -146,6 +127,21 @@ class Settings(BaseSettings):
     model_config = SettingsConfigDict(
         env_file=".env",
         extra="ignore",
+    )
+
+
+    # ---------------------------------------------------------
+    # Runtime analytics model artifacts
+    # ---------------------------------------------------------
+
+    churn_calibrated_model_path: str = (
+        "data/synthetic/models/"
+        "churn_calibrated_model.joblib"
+    )
+
+    churn_sensitivity_model_path: str = (
+        "data/synthetic/models/"
+        "churn_sensitivity_model.joblib"
     )
 
 

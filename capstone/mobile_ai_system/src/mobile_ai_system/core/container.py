@@ -1,26 +1,34 @@
-
 """
-Simple dependency injection container.
+Dependency Injection Container
+
+Architecture v2.3 (Frozen MVP)
 """
 
 from __future__ import annotations
 
-from collections.abc import Callable
 from typing import Any
+from collections.abc import Callable
 
 
-Factory = Callable[[], Any]
+class Container:
+    """
+    Lightweight dependency injection container.
 
+    Supports:
 
-class ServiceContainer:
+    - singleton instances
+    - lazy factories
+
+    without requiring third-party frameworks.
+    """
 
     def __init__(self):
 
-        self._instances: dict[str, Any] = {}
+        self._services: dict[str, Any] = {}
 
-        self._factories: dict[str, Factory] = {}
-
-    # -------------------------
+    # ---------------------------------------------------------
+    # Registration
+    # ---------------------------------------------------------
 
     def register_instance(
         self,
@@ -28,58 +36,45 @@ class ServiceContainer:
         instance: Any,
     ) -> None:
 
-        self._instances[name] = instance
-
-    # -------------------------
+        self._services[name] = instance
 
     def register_factory(
         self,
         name: str,
-        factory: Factory,
+        factory: Callable[[], Any],
     ) -> None:
 
-        self._factories[name] = factory
+        self._services[name] = factory
 
-    # -------------------------
+    # ---------------------------------------------------------
+    # Resolution
+    # ---------------------------------------------------------
 
     def resolve(
         self,
         name: str,
     ) -> Any:
 
-        if name in self._instances:
+        service = self._services[name]
 
-            return self._instances[name]
+        if callable(service):
+            return service()
 
-        if name in self._factories:
+        return service
 
-            instance = self._factories[name]()
-
-            self._instances[name] = instance
-
-            return instance
-
-        raise KeyError(
-            f"Service '{name}' is not registered."
-        )
-
-    # -------------------------
+    # ---------------------------------------------------------
+    # Utilities
+    # ---------------------------------------------------------
 
     def contains(
         self,
         name: str,
     ) -> bool:
 
-        return (
-            name in self._instances
-            or
-            name in self._factories
-        )
+        return name in self._services
 
-    # -------------------------
+    def registered_services(
+        self,
+    ) -> list[str]:
 
-    def clear(self) -> None:
-
-        self._instances.clear()
-
-        self._factories.clear()
+        return sorted(self._services.keys())

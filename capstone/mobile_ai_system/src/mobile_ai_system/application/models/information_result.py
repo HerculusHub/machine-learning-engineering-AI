@@ -1,46 +1,31 @@
 """
 Information Result
 
-Architecture v2.3 (Frozen)
+Architecture v2.3 (Frozen MVP)
 
-Represents the structured output produced by the Information Agent.
-
-This object becomes the contract between
-
-Information Agent
-        ↓
-Impact Analysis Agent
+Represents structured information retrieved from
+the information layer.
 """
 
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import Any
 
 
-@dataclass(slots=True)
+@dataclass
 class InformationResult:
     """
-    Structured information collected for downstream analysis.
+    Output of the Information Agent.
     """
 
-    # Original user request
-    query: str
+    records: list[dict] = field(default_factory=list)
 
-    # Company or organization
-    company: str | None = None
+    metadata: dict = field(default_factory=dict)
 
-    # Structured evidence
-    evidence: list[dict[str, Any]] = field(default_factory=list)
+    @property
+    def total_records(self) -> int:
+        return len(self.records)
 
-    # High-level summary
-    summary: str = ""
-
-    # Retrieval sources
-    sources: list[str] = field(default_factory=list)
-
-    # Confidence score
-    confidence: float = 0.0
-
-    # Additional metadata
-    metadata: dict[str, Any] = field(default_factory=dict)
+    @property
+    def is_empty(self) -> bool:
+        return self.total_records == 0

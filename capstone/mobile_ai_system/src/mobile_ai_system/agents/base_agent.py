@@ -1,21 +1,39 @@
-from abc import ABC, abstractmethod
+"""
+Base Agent
+
+Architecture v2.3 (Frozen MVP)
+"""
+
+from __future__ import annotations
+
+from abc import ABC
+from abc import abstractmethod
+
+from mobile_ai_system.application.models.pipeline_context import (
+    PipelineContext,
+)
 
 
 class BaseAgent(ABC):
+    """
+    Base class for every execution agent.
 
-    def __init__(self, memory=None, tools=None):
-        self.memory = memory
-        self.tools = tools or {}
+    Every agent receives the PipelineContext,
+    updates it,
+    and returns it.
+    """
 
     @property
     @abstractmethod
     def name(self) -> str:
-        """Agent name"""
-        pass
+        """Human-readable agent name."""
 
     @abstractmethod
-    def run(self, state: dict) -> dict:
-        """Execute agent logic"""
-        pass
-
-
+    def execute(
+        self,
+        context: PipelineContext,
+    ) -> PipelineContext:
+        """
+        Execute one pipeline stage.
+        """
+        raise NotImplementedError

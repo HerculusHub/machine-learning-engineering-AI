@@ -1,12 +1,20 @@
 """
-Application lifecycle management.
+Application Lifecycle
+
+Architecture v2.3 (Frozen MVP)
+
+Manages application initialization,
+health checks, and shutdown.
 """
 
 from __future__ import annotations
 
-from mobile_ai_system.core.container import ServiceContainer
-
-from .bootstrap import bootstrap_application
+from mobile_ai_system.application.bootstrap import (
+    Bootstrap,
+)
+from mobile_ai_system.core.container import (
+    Container,
+)
 
 
 class ApplicationLifecycle:
@@ -14,36 +22,60 @@ class ApplicationLifecycle:
     Manage application startup and shutdown.
     """
 
-    def __init__(self):
+    def __init__(
+        self,
+    ) -> None:
+        self.container: Container | None = None
 
-        self.container: ServiceContainer | None = None
+    # ---------------------------------------------------------
+    # Initialization
+    # ---------------------------------------------------------
 
-    # ------------------------------------
-
-    def initialize(self) -> None:
+    def initialize(
+        self,
+    ) -> None:
         """
-        Start the application.
+        Initialize the application dependency graph.
         """
 
-        self.container = bootstrap_application()
+        if self.container is not None:
+            return
 
-    # ------------------------------------
+        self.container = Bootstrap().build()
 
-    def health_check(self) -> dict:
+    # ---------------------------------------------------------
+    # Health
+    # ---------------------------------------------------------
+
+    def health_check(
+        self,
+    ) -> dict:
         """
-        Return basic application status.
+        Return basic application lifecycle status.
         """
+
+        initialized = (
+            self.container is not None
+        )
 
         return {
-            "status": "healthy",
-            "initialized": self.container is not None,
+            "status": (
+                "healthy"
+                if initialized
+                else "not_initialized"
+            ),
+            "initialized": initialized,
         }
 
-    # ------------------------------------
+    # ---------------------------------------------------------
+    # Shutdown
+    # ---------------------------------------------------------
 
-    def shutdown(self) -> None:
+    def shutdown(
+        self,
+    ) -> None:
         """
-        Shut down application.
+        Release the application container.
         """
 
         self.container = None

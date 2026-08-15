@@ -1,213 +1,206 @@
-# Markdown Report Template
+# Final Report Format
 
-Use the following report structure.
+Generate the final report in Markdown using the structure below.
 
----
+Do not print template placeholders.
+
+Do not invent information to populate a section.
+
+When material information is unavailable, write:
+
+"Not available from the current analysis."
 
 # Mobile Network Operator Strategic Intelligence Report
 
-**Generated:** {{timestamp}}
+## Executive Summary
 
-**Target Company:** {{company}}
+Provide a concise executive summary of:
 
-**Competitor:** {{competitor}}
+- the most important competitor activity;
+- the principal customer/churn implication;
+- the principal financial implication;
+- the overall strategic risk; and
+- the highest-priority recommended response.
 
-**Analyst:** AI Strategic Intelligence Platform
+Keep this section focused on decision-relevant conclusions.
 
----
+## Analysis Scope
 
-# Executive Summary
+Briefly explain:
 
-{{executive_summary}}
+- the user's request;
+- the target operator when identifiable;
+- the competitor activity examined; and
+- the evidence available to the analysis.
 
----
+Do not invent company or competitor names that are not present in the runtime
+input.
 
-# Business Background
+## Competitor Activity
 
-Describe the business context.
+Summarize the most important retrieved competitor events.
 
-Explain why the analysis was requested.
+Where supported, include:
 
----
+- competitor;
+- activity;
+- product or service;
+- pricing or promotion;
+- network or service activity;
+- timing;
+- geography; and
+- strategic relevance.
 
-# Competitor Activity
+Focus on material events rather than reproducing the raw retrieval output.
 
-Describe:
+## Market Intelligence Assessment
 
-Competitor
-
-Products
-
-Promotion
-
-Pricing
-
-Network
-
-Marketing
-
-Timeline
-
-Geography
-
----
-
-# Market Intelligence Summary
-
-Summarize retrieved market information.
-
-Include:
-
-Major findings
-
-Historical comparison
-
-Industry trends
-
-Supporting evidence
-
----
-
-# Customer Churn Analysis
-
-Include:
-
-Customer segments
-
-Key churn drivers
-
-Feature importance
-
-Behavioral analysis
-
-Confidence
-
----
-
-# Causal Analysis
-
-Explain:
-
-Why customer behavior changes
-
-Business mechanisms
-
-Alternative explanations
-
-Remaining uncertainty
-
----
-
-# Business Impact Assessment
-
-Overall Impact Score
-
-Business Risk
-
-Revenue Impact
-
-Market Share
-
-Brand Impact
-
-Operational Risk
-
-Confidence
-
----
-
-# Strategic Countermeasures
-
-List recommendations.
-
-For each recommendation include:
-
-Objective
-
-Business rationale
-
-Priority
-
-Timeline
-
-Expected benefits
-
-Potential risks
-
-Supporting evidence
-
----
-
-# Key Risks
+Explain what the retrieved competitor evidence means strategically.
 
 Identify:
 
-Business risks
+- major findings;
+- competitive pressure;
+- relevant patterns across events; and
+- implications for the target operator.
 
-Execution risks
+Do not claim historical trends or industry-wide trends unless the supplied
+evidence supports them.
 
-Competitive risks
+## Customer Churn Analysis
 
-Data limitations
+Summarize the supplied churn analysis.
 
-Model limitations
+Where available, include:
 
----
+- predicted churn impact;
+- important drivers;
+- sensitivity findings;
+- relevant customer implications; and
+- confidence.
 
-# Supporting Evidence
+Clearly identify model-generated estimates.
 
-List:
+## Causal Analysis
 
-Historical reports
+Summarize the supplied causal analysis.
 
-Competitor events
+Explain:
 
-Market reports
+- supported causal mechanisms;
+- relevant business mechanisms;
+- alternative explanations when material; and
+- remaining uncertainty.
 
-Internal data
+Do not describe an association as proven causality unless supported by the
+provided analysis.
 
-Memory references
+## Financial Impact Assessment
 
----
+Summarize the supplied financial analysis.
 
-# Limitations
+Where available, include:
 
-Describe:
+- affected customer estimates;
+- lost customer estimates;
+- revenue impact;
+- margin impact;
+- other material financial exposure; and
+- confidence or assumptions.
 
-Missing information
+Do not calculate new financial values unless the runtime analytical result
+explicitly provides the inputs and the calculation is directly required for
+clear presentation.
 
-Model assumptions
+## Strategic Countermeasures
 
-Unknown variables
+Present the most important recommended actions in priority order.
 
-Data quality issues
+For each recommendation provide:
 
----
+### Recommendation: <short action name>
 
-# Confidence Assessment
+**Priority:** Critical / High / Medium / Low
 
-Overall Confidence
+**Timeline:** Immediate / Near Term / Medium Term / Long Term
 
-High
+**Recommended Action:**  
+Describe the action.
 
-Medium
+**Business Rationale:**  
+Explain why the current evidence supports the action.
 
-Low
+**Expected Benefit:**  
+Describe the expected business benefit without inventing unsupported values.
 
-Explain why.
+**Potential Risk:**  
+Identify material risks or tradeoffs.
 
----
+**Supporting Evidence:**  
+Identify the competitor or analytical evidence supporting the recommendation.
 
-# Appendix
+## Key Risks
 
-## Retrieved Events
+Summarize material:
 
-## Important Customer Segments
+- competitive risks;
+- churn risks;
+- financial risks;
+- execution risks; and
+- analytical uncertainty.
 
-## Impact Scores
+Include only risks supported by the current analysis or clearly identified as
+strategic uncertainty.
 
-## Historical Comparisons
+## Supporting Evidence
 
-## References
+Summarize the principal evidence used in the report.
 
-End of Report
+Distinguish between:
+
+### Retrieved Evidence
+
+Competitor events and other evidence supplied by the Information Layer.
+
+### Analytical Evidence
+
+Churn, sensitivity, causal, financial, and other results supplied by the
+Impact Layer.
+
+Do not list sources that were not supplied to the report.
+
+## Limitations
+
+Identify important limitations such as:
+
+- missing information;
+- incomplete evidence;
+- analytical assumptions;
+- model limitations;
+- data limitations; and
+- uncertainty in strategic interpretation.
+
+Do not create artificial limitations merely to populate this section.
+
+## Confidence Assessment
+
+Provide an overall qualitative confidence assessment:
+
+**Overall Confidence:** High / Medium / Low
+
+Explain the rating using:
+
+- evidence quality;
+- analytical support;
+- consistency of findings;
+- model uncertainty; and
+- important missing information.
+
+## Executive Decision Summary
+
+Conclude with a short decision-oriented summary containing:
+
+1. the principal competitive threat or opportunity;
+2. the expected business impact;
+3. the most important action leadership should consider; and
+4. the most important uncertainty leadership should monitor.

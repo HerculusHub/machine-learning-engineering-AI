@@ -1,17 +1,62 @@
-# tests/integration/test_pipeline.py
+"""
+Integration test for the canonical application pipeline.
 
-from mobile_ai_system.orchestration.runner import run_pipeline
-from mobile_ai_system.memory.memory_manager import MemoryManager
+Architecture v2.3 (Frozen MVP)
+
+This test verifies that Bootstrap exposes a runnable
+ApplicationRunner and that the runner can execute a
+minimal canonical pipeline against PipelineContext.
+"""
+
+from __future__ import annotations
+
+from mobile_ai_system.application.models.execution_plan import (
+    ExecutionPlan,
+)
+from mobile_ai_system.application.models.pipeline_context import (
+    PipelineContext,
+)
 
 
-def test_pipeline(agents, base_state):
+def test_pipeline(container):
+    """
+    ApplicationRunner should execute a registered
+    pipeline stage and return PipelineContext.
+    """
 
-    memory = MemoryManager()
-
-    result = run_pipeline(
-        agents,
-        base_state,
-        memory,
+    runner = container.resolve(
+        "runner"
     )
 
-    assert result is not None
+    context = PipelineContext()
+
+    def information_handler(
+        ctx: PipelineContext,
+    ) -> PipelineContext:
+        ctx.information_result = {
+            "records": [],
+        }
+
+        return ctx
+
+    runner.register(
+        "information",
+        information_handler,
+    )
+
+    plan = ExecutionPlan(
+        steps=[
+            "information",
+        ]
+    )
+
+    result = runner.run(
+        plan,
+        context,
+    )
+
+    assert result is context
+
+    assert result.information_result == {
+        "records": [],
+    }
